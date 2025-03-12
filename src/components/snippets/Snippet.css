@@ -1,0 +1,44 @@
+.Snippet {
+  background-color: #292929;
+  border: 1px solid #292929;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 12px;
+  margin-bottom: 24px;
+  transition: background-color 0.2s ease;
+
+}
+
+.Snippet:hover {
+  background-color: #303030;
+  transition: background-color 0.2s ease;
+}
+
+.Snippet h2 {
+    margin-top:-4px;
+    margin-bottom: 20px;
+    font-size: 28px;
+    font-weight: 700;
+}
+
+.FlexRow {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+button {
+  border-radius: 8px;
+  border: 1px solid transparent;
+  padding: 0.2em 2.2em;
+  font-size: 1em;
+  font-weight: 600;
+  font-family: inherit;
+  background-color: #454545;
+  cursor: pointer;
+  transition: border-color 0.25s;
+}
+button:hover {
+  background-color: #555555;
+  border-color: #999999;
+}
