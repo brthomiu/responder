@@ -6,7 +6,8 @@ type TLine = {
   numberOfLineBreaksAfter?: number;
 }
 
-type TSnippetInfo = {
+export type TSnippetInfo = {
+  title: string;
   line0: TLine;
   line1?: TLine;
   line2?: TLine;
