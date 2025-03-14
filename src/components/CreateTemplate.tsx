@@ -1,7 +1,8 @@
 type Props = {}
 
 const CreateTemplate = (props: Props) => {
-  return (
+  
+    return (
     <div>CreateTemplate</div>
   )
 }

@@ -3,6 +3,8 @@ import { useState, useEffect } from "react";
 import FirstResponse from "./components/snippets/FirstResponse";
 import OrderShipped from "./components/snippets/OrderShipped";
 import DeskDelivery from "./components/snippets/DeskDelivery";
+import Snippet from "./components/Snippet";
+import { testDataArray } from "./testData";
 
 export type TOrderInfoObject = {
   techName: string;
@@ -16,6 +18,7 @@ export type TOrderInfoObject = {
 };
 
 function App() {
+  // these useState hooks make up the orderInfo object
   const [techName, setTechName] = useState("Technician");
   const [userName, setUserName] = useState("User");
   const [itemName, setItemName] = useState("Requested Item(s)");
@@ -28,6 +31,7 @@ function App() {
     setIsSecurityKey(!isSecurityKey);
   };
 
+  // useEffect hook checks the URL for parameters to populate the orderInfo form with
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
     setTechName(urlParams.get("techName") || "Technician");
@@ -59,6 +63,11 @@ function App() {
 
   return (
     <div className="App">
+      {testDataArray.map((object: TOrderInfoObject, index) => (
+        <Snippet key={index} orderInfoObject={object} />
+      ))}
+      <Snippet orderInfoObject={orderInfoObject} />
+
       <h1 className="">Order Information</h1>
       <form className="flex flex-col">
         <div className="flex gap-2 my-2">
