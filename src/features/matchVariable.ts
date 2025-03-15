@@ -1,5 +1,13 @@
 import { TOrderInfoObject } from "../App";
-import { TSnippetInfo, TLine } from "../components/Snippet";
+import { TSnippetInfoObject, TLine } from "../App";
+
+function getCurrentLocalDateMMDDYYYY() {
+  const now = new Date();
+  const month = String(now.getMonth() + 1).padStart(2, "0"); // Months are 0-indexed
+  const day = String(now.getDate()).padStart(2, "0");
+  const year = now.getFullYear();
+  return `${month}/${day}/${year}`;
+}
 
 const matchVariable = (
   variable: string,
@@ -16,22 +24,26 @@ const matchVariable = (
       return orderInfoObject.orderClosed;
     case "#location":
       return orderInfoObject.deliveryLocation;
+    case "#time":
+      return orderInfoObject.timeFrame;
+    case "#tracking":
+      return orderInfoObject.trackingNumber;
+    case "#today":
+      return getCurrentLocalDateMMDDYYYY();
     default:
       return "#VARIABLE_ERROR";
   }
 };
 
 export const processSnippet = (
-  snippet: TSnippetInfo,
+  snippet: TSnippetInfoObject,
   orderInfoObject: TOrderInfoObject
-): TSnippetInfo => {
-  const processedSnippet: TSnippetInfo = { ...snippet };
+): TSnippetInfoObject => {
+  const processedSnippet: TSnippetInfoObject = { ...snippet };
 
-  const processLine = (line: TLine | undefined): TLine | undefined => {
-    if (!line) return undefined;
-
+  const processLine = (line: TLine): TLine => {
     let processedText = line.text;
-    const regex = /#(tech|user|item|closed|location)/g;
+    const regex = /#(tech|user|item|closed|location|time|tracking|today)/g;
     let match;
 
     while ((match = regex.exec(line.text)) !== null) {
