@@ -30,6 +30,8 @@ const matchVariable = (
       return orderInfoObject.trackingNumber;
     case "#today":
       return getCurrentLocalDateMMDDYYYY();
+    case "#sk-enroll":
+      return "To enroll a new security key please visit go/sk-enroll.";
     default:
       return "#VARIABLE_ERROR";
   }
@@ -43,7 +45,7 @@ export const processSnippet = (
 
   const processLine = (line: TLine): TLine => {
     let processedText = line.text;
-    const regex = /#(tech|user|item|closed|location|time|tracking|today)/g;
+    const regex = /#(tech|user|item|closed|location|time|tracking|today|sk-enroll)/g;
     let match;
 
     while ((match = regex.exec(line.text)) !== null) {

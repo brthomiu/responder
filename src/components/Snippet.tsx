@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { TLine, TOrderInfoObject, TSnippetInfoObject } from "../App";
 import { processSnippet } from "../features/matchVariable";
+import { copyTextFromElement } from "../features/copyFunction";
 
 // Define the props interface for the Snippet component
 type Props = {
@@ -25,18 +26,12 @@ const RenderLine = ({ line }: { line: TLine }) => {
       <div>{line.text}</div>
 
       {/* Render a line break after the text if numberOfLineBreaksAfter is 1 */}
-      {line.numberOfLineBreaksAfter === 1 && (
-        <div>
-          {`\n`}
-          <br />
-        </div>
-      )}
+      {line.numberOfLineBreaksAfter === 1 && <div>{`\n`}</div>}
 
       {/* Render two line breaks after the text if numberOfLineBreaksAfter is 2 */}
       {line.numberOfLineBreaksAfter === 2 && (
         <div>
           {`\n\n`}
-          <br />
           <br />
         </div>
       )}
@@ -96,13 +91,22 @@ const Snippet = (props: Props) => {
   if (processedSnippetInfo) {
     return (
       <div className="bg-stone-900 border border-stone-700 rounded-md shadow-md p-4 mb-6">
-        <div className="flex justify-between items-center">
-        </div>
+        <div className="flex justify-between items-center"></div>
         <div>
-          <h2 className="text-3xl font-semibold my-4">
-            {processedSnippetInfo.title}
-          </h2>
-          <RenderLines processedSnippetInfo={processedSnippetInfo} />
+          <div className="flex flex-row justify-between">
+            <h2 className="text-3xl font-semibold my-4">
+              {processedSnippetInfo.title}
+            </h2>
+            <button
+              className="bg-stone-700 hover:bg-stone-600 active:bg-stone-500 h-12 mt-2 mr-4 py-1 px-2 rounded-md cursor-pointer transition-colors duration-200 hover:transition-none active:transition-none"
+              onClick={() => copyTextFromElement("snippet")}
+            >
+              Copy Response
+            </button>
+          </div>
+          <div id="snippet">
+            <RenderLines processedSnippetInfo={processedSnippetInfo} />
+          </div>
         </div>
       </div>
     );
