@@ -23,7 +23,7 @@ export type TOrderInfoObject = {
   timeFrame: string; // Expected delivery timeframe
   trackingNumber: string; // Order tracking identifier
   orderClosed: string; // Standard message shown when an order is closed
-  isSecurityKey: boolean; // Flag for special handling of security-sensitive items
+  securityKeyMessage: string; // Holds Security Key Message
 };
 
 /**
@@ -90,7 +90,10 @@ function App() {
   const [deliveryLocation, setDeliveryLocation] = useState("your desk"); // Default delivery location
   const [timeFrame, setTimeFrame] = useState("1 business day"); // Default timeframe
   const [trackingNumber, setTrackingNumber] = useState("XXXXXXXXX"); // Default tracking number placeholder
-  const [isSecurityKey, setIsSecurityKey] = useState(false); // Security key flag, default to false
+
+  // States to hold security key message - toggled by checkmark
+  const [isSecurityKey, setIsSecurityKey] = useState<boolean>(false);
+  const [securityKeyMessage, setSecurityKeyMessage] = useState<string>("");
 
   // Snippet template state variables - each line has its own state with default values
   const [title, setTitle] = useState("Title"); // Template title with default value
@@ -175,8 +178,16 @@ function App() {
    * Toggle handler for the security key checkbox
    * Inverts the current isSecurityKey state
    */
-  const toggleIsSecurityKey = () => {
-    setIsSecurityKey(!isSecurityKey);
+  const toggleSecurityKeyMessage = () => {
+    if (!isSecurityKey) {
+      setSecurityKeyMessage(
+        "To enroll a new security key please visit go/sk-enroll"
+      );
+      setIsSecurityKey(true);
+    } else {
+      setSecurityKeyMessage("");
+      setIsSecurityKey(false);
+    }
   };
 
   /**
@@ -192,7 +203,7 @@ function App() {
     trackingNumber,
     orderClosed:
       "This request is now being closed, please visit go/stuff to request additional equipment, or visit go/emt-request for additional support.",
-    isSecurityKey,
+    securityKeyMessage,
   };
 
   /**
@@ -337,7 +348,7 @@ function App() {
               type="checkbox"
               className="scale-125"
               checked={isSecurityKey}
-              onChange={toggleIsSecurityKey}
+              onChange={toggleSecurityKeyMessage}
             />
           </div>
         </div>
@@ -346,14 +357,14 @@ function App() {
       {/* Template Creation View - Only shown when view state is "createSnippets" */}
       {view === "createSnippets" && (
         <>
-          <h1 className="mb-4">Create Template</h1>
+          <h1 className="mb-4">Create Snippet</h1>
           <CreateTemplate
             snippetInfoObject={snippetInfoObject}
             snippetInfoSetter={snippetInfoSetter}
           />
 
           {/* Preview section shows how the template will look with current order data */}
-          <h1 className="mb-4 mt-12">Template Preview</h1>
+          <h1 className="mb-4 mt-12">Snippet Preview</h1>
           <Snippet
             orderInfoObject={orderInfoObject}
             snippetInfoObject={snippetInfoObject}
@@ -364,7 +375,7 @@ function App() {
       {/* View Snippets View - Only shown when view state is "viewSnippets" */}
       {view === "viewSnippets" && (
         <>
-          <h1 className="mb-2">Snippets</h1>
+          <h1 className="mb-6">Snippets</h1>
           {defaultSnippets.map((snippetInfo: TSnippetInfoObject) => (
             <Snippet
               orderInfoObject={orderInfoObject}

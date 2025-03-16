@@ -82,7 +82,7 @@ const Snippet = (props: Props) => {
     if (snippetInfoObject) {
       // Process the snippet using the processSnippet function
       setProcessedSnippetInfo(
-        processSnippet(snippetInfoObject, orderInfoObject)
+        processSnippet(snippetInfoObject, orderInfoObject, orderInfoObject.securityKeyMessage)
       );
     }
   }, [snippetInfoObject, orderInfoObject]);
@@ -94,7 +94,7 @@ const Snippet = (props: Props) => {
         <div className="flex justify-between items-center"></div>
         <div>
           <div className="flex flex-row justify-between">
-            <h2 className="text-3xl font-semibold my-4">
+            <h2 className="text-3xl font-semibold mt-2 mb-6">
               {processedSnippetInfo.title}
             </h2>
             <button
@@ -104,7 +104,7 @@ const Snippet = (props: Props) => {
               Copy Response
             </button>
           </div>
-          <div id="snippet">
+          <div className="mb-1" id="snippet">
             <RenderLines processedSnippetInfo={processedSnippetInfo} />
           </div>
         </div>

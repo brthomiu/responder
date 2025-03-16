@@ -2,16 +2,11 @@
 
 ## Todos:
 
-Consolidate the useState hooks that hold the orderObjectInfo and snippetInfo into single hooks with an object instead of a ton of hooks that hold each parameter. Will need to make the setters & getters.
+Snippets are not being indexed properly when mapped from the templates which is causing the copy button to only copy the first snippet since they all have the same ID.
 
 Allow users to save templates into local storage, save & import backup templates.
 
-Make a template creation page.
-
-Add different views to the app, a way to create/delete views, and move templates between views.
-
 Add a start page that loads the first time the app is used that prompts the user for their name and to setup default templates.
-
 
 
 
