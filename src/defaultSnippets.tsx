@@ -2,9 +2,62 @@ import { TSnippetInfoObject } from "./App";
 
 export const defaultSnippets: TSnippetInfoObject[] = [
   {
+    title: "First Response",
+    line0: {
+      text: "Hello #user,",
+      numberOfLineBreaksBefore: 0,
+      numberOfLineBreaksAfter: 2,
+    },
+    line1: {
+      text: "Thank you for contacting EMT!",
+      numberOfLineBreaksBefore: 0,
+      numberOfLineBreaksAfter: 2,
+    },
+    line2: {
+      text: "Your order for the #item has been received and is being processed. You will receive an update from the assigned technician providing the status of your order within #time.",
+      numberOfLineBreaksBefore: 0,
+      numberOfLineBreaksAfter: 2,
+    },
+    line3: {
+      text: "Best regards,",
+      numberOfLineBreaksBefore: 0,
+      numberOfLineBreaksAfter: 1,
+    },
+    line4: {
+      text: "#tech",
+      numberOfLineBreaksBefore: 0,
+      numberOfLineBreaksAfter: 1,
+    },
+    line5: {
+      text: "",
+      numberOfLineBreaksBefore: 0,
+      numberOfLineBreaksAfter: 1,
+    },
+    line6: {
+      text: "",
+      numberOfLineBreaksBefore: 0,
+      numberOfLineBreaksAfter: 1,
+    },
+    line7: {
+      text: "",
+      numberOfLineBreaksBefore: 0,
+      numberOfLineBreaksAfter: 1,
+    },
+    line8: {
+      text: "",
+      numberOfLineBreaksBefore: 0,
+      numberOfLineBreaksAfter: 1,
+    },
+    line9: {
+      text: "",
+      numberOfLineBreaksBefore: 0,
+      numberOfLineBreaksAfter: 1,
+    },
+  },
+  {
     title: "Desk Delivery",
     line0: {
-      text: "Hello #user",
+      text: "Hello #user,",
       numberOfLineBreaksBefore: 0,
       numberOfLineBreaksAfter: 2,
     },
@@ -14,27 +67,80 @@ export const defaultSnippets: TSnippetInfoObject[] = [
       numberOfLineBreaksAfter: 2,
     },
     line2: {
-      text: "Best regards",
+      text: "#sk-enroll",
+      numberOfLineBreaksBefore: 0,
+      numberOfLineBreaksAfter: 2,
+    },
+    line3: {
+      text: "#closed",
+      numberOfLineBreaksBefore: 0,
+      numberOfLineBreaksAfter: 2,
+    },
+    line4: {
+      text: "Best regards,",
       numberOfLineBreaksBefore: 0,
       numberOfLineBreaksAfter: 1,
     },
-    line3: {
-      text: "#tech",
-      numberOfLineBreaksBefore: 0,
-      numberOfLineBreaksAfter: 0,
-    },
-    line4: {
-      text: "",
-      numberOfLineBreaksBefore: 0,
-      numberOfLineBreaksAfter: 0,
-    },
     line5: {
-      text: "",
+      text: "#tech",
       numberOfLineBreaksBefore: 0,
       numberOfLineBreaksAfter: 1,
     },
     line6: {
       text: "",
+      numberOfLineBreaksBefore: 0,
+      numberOfLineBreaksAfter: 1,
+    },
+    line7: {
+      text: "",
+      numberOfLineBreaksBefore: 0,
+      numberOfLineBreaksAfter: 1,
+    },
+    line8: {
+      text: "",
+      numberOfLineBreaksBefore: 0,
+      numberOfLineBreaksAfter: 1,
+    },
+    line9: {
+      text: "",
+      numberOfLineBreaksBefore: 0,
+      numberOfLineBreaksAfter: 1,
+    },
+  },
+  {
+    title: "Order Shipped",
+    line0: {
+      text: "Hello #user,",
+      numberOfLineBreaksBefore: 0,
+      numberOfLineBreaksAfter: 2,
+    },
+    line1: {
+      text: "The #item you ordered is ready!",
+      numberOfLineBreaksBefore: 0,
+      numberOfLineBreaksAfter: 2,
+    },
+    line2: {
+      text: "This order is being shipped to you via FedEx. Please see the tracking number for the shipment below.",
+      numberOfLineBreaksBefore: 0,
+      numberOfLineBreaksAfter: 2,
+    },
+    line3: {
+      text: "FedEx Tracking ID: #tracking",
+      numberOfLineBreaksBefore: 0,
+      numberOfLineBreaksAfter: 2,
+    },
+    line4: {
+      text: "#sk-enroll",
+      numberOfLineBreaksBefore: 0,
+      numberOfLineBreaksAfter: 2,
+    },
+    line5: {
+      text: "Best Regards,",
+      numberOfLineBreaksBefore: 0,
+      numberOfLineBreaksAfter: 1,
+    },
+    line6: {
+      text: "#tech",
       numberOfLineBreaksBefore: 0,
       numberOfLineBreaksAfter: 1,
     },
