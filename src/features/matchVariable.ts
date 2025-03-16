@@ -11,7 +11,8 @@ function getCurrentLocalDateMMDDYYYY() {
 
 const matchVariable = (
   variable: string,
-  orderInfoObject: TOrderInfoObject
+  orderInfoObject: TOrderInfoObject,
+  skMessage: string
 ): string => {
   switch (variable) {
     case "#tech":
@@ -31,7 +32,7 @@ const matchVariable = (
     case "#today":
       return getCurrentLocalDateMMDDYYYY();
     case "#sk-enroll":
-      return "To enroll a new security key please visit go/sk-enroll.";
+      return skMessage;
     default:
       return "#VARIABLE_ERROR";
   }
@@ -39,7 +40,8 @@ const matchVariable = (
 
 export const processSnippet = (
   snippet: TSnippetInfoObject,
-  orderInfoObject: TOrderInfoObject
+  orderInfoObject: TOrderInfoObject,
+  skMessage: string
 ): TSnippetInfoObject => {
   const processedSnippet: TSnippetInfoObject = { ...snippet };
 
@@ -50,7 +52,7 @@ export const processSnippet = (
 
     while ((match = regex.exec(line.text)) !== null) {
       const variable = `#${match[1]}`;
-      const replacement = matchVariable(variable, orderInfoObject);
+      const replacement = matchVariable(variable, orderInfoObject, skMessage);
       processedText = processedText.replace(variable, replacement);
     }
 
