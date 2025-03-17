@@ -11,8 +11,6 @@
     "action": {
         "default_popup": "index.html",
         "default_icon": "vite.svg"
-    },
-    "background": {
-        "service_worker": "background.js"
     }
+
 }

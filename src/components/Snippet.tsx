@@ -87,10 +87,10 @@ const Snippet = (props: Props) => {
   const deleteSnippet = (index: number | undefined) => {
     const oldTemplates = getTemplates();
     if (oldTemplates && index) {
-      console.log("deletion INDEX--------",index)
-      console.log("oldTemplates------------------",oldTemplates)
-      const newSnippets = oldTemplates.splice(index+1);
-      console.log("newSnippets------------------",newSnippets)
+      console.log("deletion INDEX--------", index);
+      console.log("oldTemplates------------------", oldTemplates);
+      const newSnippets = oldTemplates.splice(index + 1);
+      console.log("newSnippets------------------", newSnippets);
 
       const updatedSnippets = [...newSnippets];
       localStorage.removeItem("templates");
@@ -116,7 +116,7 @@ const Snippet = (props: Props) => {
   // Render the processed snippet if it exists
   if (processedSnippetInfo) {
     return (
-      <div className="min-h-80 bg-stone-900 border border-stone-700 rounded-md shadow-md p-4 mb-6">
+      <div className="min-h-24 bg-stone-900 border border-stone-700 rounded-md shadow-md p-4 mb-6">
         <div className="flex justify-between items-center"></div>
         <div>
           <div className="flex flex-row justify-between">
@@ -124,24 +124,29 @@ const Snippet = (props: Props) => {
               {processedSnippetInfo.title}
             </h2>
           </div>
-          <div className="flex flex-row justify-between mb-1" id={`${index}`}>
-            <div className="flex flex-col">
+          <div className="flex flex-col justify-between mb-1" id={`${index}`}>
+            <div className="flex flex-col ">
               <RenderLines processedSnippetInfo={processedSnippetInfo} />
             </div>
-            <div className="flex flex-col justify-between mt-20">
-              <button
-                className="absolute -translate-y-40 -translate-x-34 bg-stone-700 h-16 font-bold hover:bg-stone-600 active:bg-stone-500 tracking-wide mt-2 mr-4 py-1 px-2 rounded-md cursor-pointer transition-colors duration-200 hover:transition-none active:transition-none"
+            <div className="">
+            <div className="flex flex-row-reverse justify-between mt-12">
+            <button
+                className="bg-stone-700 h-16 font-bold hover:bg-stone-600 active:bg-stone-500 tracking-wide mr-4 py-1 px-2 rounded-md cursor-pointer transition-colors duration-200 hover:transition-none active:transition-none"
                 onClick={() => copyTextFromElement(`${index}`)}
               >
                 Copy Response
               </button>
-              {!snippetInfoObject.default && (<button 
-              className="absolute translate-y-24 -translate-x-16 bg-red-900 font-bold hover:bg-red-800 active:bg-red-700 tracking-wide h-12 mr-4 py-1 px-2 rounded-md cursor-pointer transition-colors duration-200 hover:transition-none active:transition-none"
-              onClick={() => deleteSnippet(index)}
-              >
-                Delete
-              </button>)}
+              {!snippetInfoObject.default && (
+                <button
+                  className="bg-red-900 font-bold hover:bg-red-800 active:bg-red-700 tracking-wide h-16 mr-4 py-1 px-2 rounded-md cursor-pointer transition-colors duration-200 hover:transition-none active:transition-none"
+                  onClick={() => deleteSnippet(index)}
+                >
+                  Delete
+                </button>
+              )}{" "}
+
             </div>
+          </div>
           </div>
         </div>
       </div>

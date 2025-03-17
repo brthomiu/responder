@@ -278,7 +278,7 @@ function App() {
   };
 
   return (
-    <div className="max-w-4xl">
+    <div className="max-w-2xl">
       {/* Navigation Bar */}
       <div className="fixed h-12 bg-neutral-800 w-full left-0 top-0 pt-1 pr-4">
         <div className="flex flex-row justify-end gap-4">
@@ -316,8 +316,8 @@ function App() {
           <h1 className="mb-2">Order Information</h1>
           <form className="flex flex-col mb-12">
             {/* First row of form fields */}
-            <div className="flex gap-2 my-2">
-              <div className="w-54">
+            <div className="flex flex-row gap-2 my-2">
+              <div className="flex-col w-54">
                 Tech Name:{" "}
                 <input
                   className="border border-gray-500 px-1.5 py-0.5 rounded"
@@ -326,7 +326,7 @@ function App() {
                   onChange={(event) => handleInput(setTechName, event)}
                 />
               </div>
-              <div className="w-54">
+              <div className="flex-col w-54">
                 User Name:{" "}
                 <input
                   className="border border-gray-500 px-1.5 py-0.5 rounded"
@@ -335,7 +335,7 @@ function App() {
                   onChange={(event) => handleInput(setUserName, event)}
                 />
               </div>
-              <div className="w-54">
+              <div className="flex-col w-54">
                 Item Name:{" "}
                 <input
                   className="border border-gray-500 px-1.5 py-0.5 rounded"
@@ -348,8 +348,8 @@ function App() {
 
             {/* Second row of form fields */}
             <div className="flex gap-2">
-              <div className="w-54">
-                Time Frame:{" "}
+            <div className="flex-col w-54">
+            Time Frame:{" "}
                 <input
                   className="border border-gray-500 px-1.5 py-0.5 rounded"
                   id="TimeFrame"
@@ -357,7 +357,7 @@ function App() {
                   onChange={(event) => handleInput(setTimeFrame, event)}
                 />
               </div>
-              <div className="w-54">
+              <div className="flex-col w-54">
                 Delivery Location:{" "}
                 <input
                   className="border border-gray-500 px-1.5 py-0.5 rounded"
@@ -366,7 +366,7 @@ function App() {
                   onChange={(event) => handleInput(setDeliveryLocation, event)}
                 />
               </div>
-              <div className="w-54">
+              <div className="flex-col w-54">
                 Tracking Number:{" "}
                 <input
                   className="border border-gray-500 px-1.5 py-0.5 rounded"
