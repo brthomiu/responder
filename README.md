@@ -2,7 +2,7 @@
 
 ## Todos:
 
-Allow users to save templates into local storage, save & import backup templates.
+Deleting custom snippets currently deletes all custom snippets, I think due to some kind of issue with the way the array is being spliced and set to localstorage.
 
 Add a start page that loads the first time the app is used that prompts the user for their name and to setup default templates.
 
