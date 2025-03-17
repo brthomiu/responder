@@ -377,7 +377,7 @@ function App() {
               </div>
 
               {/* Security Key checkbox */}
-              <div className="flex flex-col gap-2 text-center w-48 -translate-y-8">
+              <div className="flex flex-col gap-2 text-center w-48">
                 <div>Security Key?</div>
                 <input
                   type="checkbox"
