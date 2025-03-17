@@ -316,8 +316,8 @@ function App() {
           <h1 className="mb-2">Order Information</h1>
           <form className="flex flex-col mb-12">
             {/* First row of form fields */}
-            <div className="flex flex-row gap-2 my-2">
-              <div className="flex-col w-54">
+            <div className="flex flex-row gap-6 my-2">
+              <div className="flex-col w-48">
                 Tech Name:{" "}
                 <input
                   className="border border-gray-500 px-1.5 py-0.5 rounded"
@@ -326,7 +326,7 @@ function App() {
                   onChange={(event) => handleInput(setTechName, event)}
                 />
               </div>
-              <div className="flex-col w-54">
+              <div className="flex-col w-48">
                 User Name:{" "}
                 <input
                   className="border border-gray-500 px-1.5 py-0.5 rounded"
@@ -335,7 +335,7 @@ function App() {
                   onChange={(event) => handleInput(setUserName, event)}
                 />
               </div>
-              <div className="flex-col w-54">
+              <div className="flex-col w-48">
                 Item Name:{" "}
                 <input
                   className="border border-gray-500 px-1.5 py-0.5 rounded"
@@ -347,8 +347,8 @@ function App() {
             </div>
 
             {/* Second row of form fields */}
-            <div className="flex gap-2">
-            <div className="flex-col w-54">
+            <div className="flex gap-6">
+            <div className="flex-col w-48">
             Time Frame:{" "}
                 <input
                   className="border border-gray-500 px-1.5 py-0.5 rounded"
@@ -357,7 +357,7 @@ function App() {
                   onChange={(event) => handleInput(setTimeFrame, event)}
                 />
               </div>
-              <div className="flex-col w-54">
+              <div className="flex-col w-48">
                 Delivery Location:{" "}
                 <input
                   className="border border-gray-500 px-1.5 py-0.5 rounded"
@@ -366,7 +366,7 @@ function App() {
                   onChange={(event) => handleInput(setDeliveryLocation, event)}
                 />
               </div>
-              <div className="flex-col w-54">
+              <div className="flex-col w-48">
                 Tracking Number:{" "}
                 <input
                   className="border border-gray-500 px-1.5 py-0.5 rounded"
@@ -377,7 +377,7 @@ function App() {
               </div>
 
               {/* Security Key checkbox */}
-              <div className="flex flex-col gap-2 text-center w-54">
+              <div className="flex flex-col gap-2 text-center w-48 -translate-y-8">
                 <div>Security Key?</div>
                 <input
                   type="checkbox"

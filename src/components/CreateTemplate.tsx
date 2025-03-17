@@ -108,15 +108,15 @@ const CreateTemplate = (props: Props) => {
         <div className="text-gray-400">
           The following hashtags will be replaced with order information:
         </div>
-        <div className="flex flex-row gap-6">
-          <div className="font-semibold text-xl tracking-wide">#tech</div>
-          <div className="font-semibold text-xl tracking-wide">#user</div>
-          <div className="font-semibold text-xl tracking-wide">#item</div>
-          <div className="font-semibold text-xl tracking-wide">#time</div>
-          <div className="font-semibold text-xl tracking-wide">#tracking</div>
-          <div className="font-semibold text-xl tracking-wide">#today</div>
-          <div className="font-semibold text-xl tracking-wide">#closed</div>
-          <div className="font-semibold text-xl tracking-wide">#sk-enroll</div>
+        <div className="flex flex-row gap-4">
+          <div className="font-semibold text-lg tracking-wide">#tech</div>
+          <div className="font-semibold text-lg tracking-wide">#user</div>
+          <div className="font-semibold text-lg tracking-wide">#item</div>
+          <div className="font-semibold text-lg tracking-wide">#time</div>
+          <div className="font-semibold text-lg tracking-wide">#tracking</div>
+          <div className="font-semibold text-lg tracking-wide">#today</div>
+          <div className="font-semibold text-lg tracking-wide">#closed</div>
+          <div className="font-semibold text-lg tracking-wide">#sk-enroll</div>
         </div>
       </div>
       <div className="flex flex-col">
