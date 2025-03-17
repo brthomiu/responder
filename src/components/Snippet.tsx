@@ -2,11 +2,17 @@ import { useEffect, useState } from "react";
 import { TLine, TOrderInfoObject, TSnippetInfoObject } from "../App";
 import { processSnippet } from "../features/matchVariable";
 import { copyTextFromElement } from "../features/copyFunction";
+import { defaultSnippets } from "../defaultSnippets";
+import { getTemplates } from "../features/getTemplates";
 
 // Define the props interface for the Snippet component
 type Props = {
+  index?: number;
   orderInfoObject: TOrderInfoObject; // Object containing order information used for variable replacement
   snippetInfoObject: TSnippetInfoObject; // Object containing snippet template information
+  setCurrentSnippets: React.Dispatch<
+    React.SetStateAction<TSnippetInfoObject[]>
+  >;
 };
 
 /**
@@ -75,14 +81,34 @@ const Snippet = (props: Props) => {
   >();
 
   // Destructure order info and snippet info from props
-  const { orderInfoObject, snippetInfoObject } = props;
+  const { orderInfoObject, snippetInfoObject, index, setCurrentSnippets } =
+    props;
+
+  const deleteSnippet = (index: number | undefined) => {
+    const oldTemplates = getTemplates();
+    if (oldTemplates && index) {
+      console.log("deletion INDEX--------",index)
+      console.log("oldTemplates------------------",oldTemplates)
+      const newSnippets = oldTemplates.splice(index+1);
+      console.log("newSnippets------------------",newSnippets)
+
+      const updatedSnippets = [...newSnippets];
+      localStorage.removeItem("templates");
+      localStorage.setItem("templates", JSON.stringify(updatedSnippets));
+      setCurrentSnippets([...defaultSnippets, ...updatedSnippets]);
+    }
+  };
 
   // useEffect hook to process the snippet when snippetInfoObject or orderInfoObject changes
   useEffect(() => {
     if (snippetInfoObject) {
       // Process the snippet using the processSnippet function
       setProcessedSnippetInfo(
-        processSnippet(snippetInfoObject, orderInfoObject, orderInfoObject.securityKeyMessage)
+        processSnippet(
+          snippetInfoObject,
+          orderInfoObject,
+          orderInfoObject.securityKeyMessage
+        )
       );
     }
   }, [snippetInfoObject, orderInfoObject]);
@@ -90,22 +116,32 @@ const Snippet = (props: Props) => {
   // Render the processed snippet if it exists
   if (processedSnippetInfo) {
     return (
-      <div className="bg-stone-900 border border-stone-700 rounded-md shadow-md p-4 mb-6">
+      <div className="min-h-80 bg-stone-900 border border-stone-700 rounded-md shadow-md p-4 mb-6">
         <div className="flex justify-between items-center"></div>
         <div>
           <div className="flex flex-row justify-between">
             <h2 className="text-3xl font-semibold mt-2 mb-6">
               {processedSnippetInfo.title}
             </h2>
-            <button
-              className="bg-stone-700 hover:bg-stone-600 active:bg-stone-500 h-12 mt-2 mr-4 py-1 px-2 rounded-md cursor-pointer transition-colors duration-200 hover:transition-none active:transition-none"
-              onClick={() => copyTextFromElement("snippet")}
-            >
-              Copy Response
-            </button>
           </div>
-          <div className="mb-1" id="snippet">
-            <RenderLines processedSnippetInfo={processedSnippetInfo} />
+          <div className="flex flex-row justify-between mb-1" id={`${index}`}>
+            <div className="flex flex-col">
+              <RenderLines processedSnippetInfo={processedSnippetInfo} />
+            </div>
+            <div className="flex flex-col justify-between mt-20">
+              <button
+                className="absolute -translate-y-40 -translate-x-34 bg-stone-700 h-16 font-bold hover:bg-stone-600 active:bg-stone-500 tracking-wide mt-2 mr-4 py-1 px-2 rounded-md cursor-pointer transition-colors duration-200 hover:transition-none active:transition-none"
+                onClick={() => copyTextFromElement(`${index}`)}
+              >
+                Copy Response
+              </button>
+              {!snippetInfoObject.default && (<button 
+              className="absolute translate-y-24 -translate-x-16 bg-red-900 font-bold hover:bg-red-800 active:bg-red-700 tracking-wide h-12 mr-4 py-1 px-2 rounded-md cursor-pointer transition-colors duration-200 hover:transition-none active:transition-none"
+              onClick={() => deleteSnippet(index)}
+              >
+                Delete
+              </button>)}
+            </div>
           </div>
         </div>
       </div>

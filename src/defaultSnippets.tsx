@@ -53,6 +53,7 @@ export const defaultSnippets: TSnippetInfoObject[] = [
       numberOfLineBreaksBefore: 0,
       numberOfLineBreaksAfter: 1,
     },
+    default: true
   },
   {
     title: "Desk Delivery",
@@ -106,6 +107,7 @@ export const defaultSnippets: TSnippetInfoObject[] = [
       numberOfLineBreaksBefore: 0,
       numberOfLineBreaksAfter: 1,
     },
+    default: true
   },
   {
     title: "Order Shipped",
@@ -135,17 +137,17 @@ export const defaultSnippets: TSnippetInfoObject[] = [
       numberOfLineBreaksAfter: 2,
     },
     line5: {
+      text: "#closed,",
+      numberOfLineBreaksBefore: 0,
+      numberOfLineBreaksAfter: 2,
+    },
+    line6: {
       text: "Best Regards,",
       numberOfLineBreaksBefore: 0,
       numberOfLineBreaksAfter: 1,
     },
-    line6: {
-      text: "#tech",
-      numberOfLineBreaksBefore: 0,
-      numberOfLineBreaksAfter: 1,
-    },
     line7: {
-      text: "",
+      text: "#tech",
       numberOfLineBreaksBefore: 0,
       numberOfLineBreaksAfter: 1,
     },
@@ -159,5 +161,6 @@ export const defaultSnippets: TSnippetInfoObject[] = [
       numberOfLineBreaksBefore: 0,
       numberOfLineBreaksAfter: 1,
     },
+    default: true
   },
 ];

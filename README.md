@@ -2,8 +2,6 @@
 
 ## Todos:
 
-Snippets are not being indexed properly when mapped from the templates which is causing the copy button to only copy the first snippet since they all have the same ID.
-
 Allow users to save templates into local storage, save & import backup templates.
 
 Add a start page that loads the first time the app is used that prompts the user for their name and to setup default templates.

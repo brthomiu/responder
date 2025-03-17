@@ -1,15 +1,13 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 // App.tsx (or .jsx)
 import { useState, useEffect } from "react";
 import { defaultSnippets } from "./defaultSnippets";
-
-// Import pre-built snippet template components
-// import FirstResponse from "./components/snippets/FirstResponse";
-// import OrderShipped from "./components/snippets/OrderShipped";
-// import DeskDelivery from "./components/snippets/DeskDelivery";
+import { getSnippets } from "./features/getTemplates";
 
 // Import generic snippet component and template creation component
 import Snippet from "./components/Snippet";
 import CreateTemplate from "./components/CreateTemplate";
+import ViewSnippets from "./components/ViewSnippets";
 
 /**
  * Type definition for order information
@@ -52,6 +50,7 @@ export type TSnippetInfoObject = {
   line7: TLine; // Eighth line of the template
   line8: TLine; // Ninth line of the template
   line9: TLine; // Tenth line of the template
+  default: boolean; // Is this a default template?
 };
 
 /**
@@ -79,9 +78,13 @@ export type TSnippetInfoSetter = {
  */
 function App() {
   // State for controlling which view is currently active
-  const [view, setView] = useState<"viewSnippets" | "createSnippets">(
-    "viewSnippets"
-  );
+  const [view, setView] = useState<
+    "viewSnippets" | "createSnippets" | "settings"
+  >("viewSnippets");
+
+  // State to hold the list of snippets
+  const [currentSnippets, setCurrentSnippets] =
+    useState<TSnippetInfoObject[]>(defaultSnippets);
 
   // Order information state variables - each field has its own state and setter
   const [techName, setTechName] = useState("Technician"); // Default tech name
@@ -156,6 +159,7 @@ function App() {
    */
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
+    getSnippets(currentSnippets, setCurrentSnippets);
 
     // Set each field from URL parameter or use default value if parameter is not present
     setTechName(urlParams.get("techName") || "Technician");
@@ -164,14 +168,6 @@ function App() {
     setDeliveryLocation(urlParams.get("deliveryLocation") || "your desk");
     setTimeFrame(urlParams.get("timeFrame") || "1 business day");
     setTrackingNumber(urlParams.get("trackingNumber") || "XXXXXXXXX");
-  }, []); // Empty dependency array ensures this runs only once on component mount
-
-  /**
-   * Effect hook that runs once when the component mounts
-   * Populates localStorage with default templates
-   */
-  useEffect(() => {
-    localStorage.setItem("snippets", JSON.stringify(defaultSnippets));
   }, []); // Empty dependency array ensures this runs only once on component mount
 
   /**
@@ -206,6 +202,25 @@ function App() {
     securityKeyMessage,
   };
 
+  const addDefaultToSnippet = (
+    snippet: TSnippetInfoObject
+  ): TSnippetInfoObject => {
+    return {
+      title: snippet.title,
+      line0: snippet.line0,
+      line1: snippet.line1,
+      line2: snippet.line2,
+      line3: snippet.line3,
+      line4: snippet.line4,
+      line5: snippet.line5,
+      line6: snippet.line6,
+      line7: snippet.line7,
+      line8: snippet.line8,
+      line9: snippet.line9,
+      default: true,
+    };
+  };
+
   /**
    * Consolidated snippet template information object for use in child components
    * Combines all individual template line states into a single object
@@ -222,6 +237,7 @@ function App() {
     line7,
     line8,
     line9,
+    default: false,
   };
 
   /**
@@ -256,103 +272,124 @@ function App() {
     setField(event.target.value);
   };
 
+  const handleResetView = () => {
+    setCurrentSnippets(defaultSnippets);
+    setView("viewSnippets");
+  };
+
   return (
     <div className="max-w-4xl">
       {/* Navigation Bar */}
       <div className="fixed h-12 bg-neutral-800 w-full left-0 top-0 pt-1 pr-4">
         <div className="flex flex-row justify-end gap-4">
-          <button
-            className="bg-stone-700 hover:bg-stone-600 active:bg-stone-500 py-2 px-3 rounded-md cursor-pointer transition-colors duration-200 hover:transition-none active:transition-none"
-            onClick={() => setView("viewSnippets")}
-          >
-            View Snippets
-          </button>
-          <button
-            className="bg-stone-700 hover:bg-stone-600 active:bg-stone-500 py-2 px-3 rounded-md cursor-pointer transition-colors duration-200 hover:transition-none active:transition-none"
-            onClick={() => setView("createSnippets")}
-          >
-            Create Snippets
-          </button>
+          {view !== "viewSnippets" && (
+            <button
+              className="bg-stone-700  hover:bg-stone-600 active:bg-stone-500 tracking-wide font-bold py-2 px-3 rounded-md cursor-pointer transition-colors duration-200 hover:transition-none active:transition-none"
+              onClick={() => handleResetView()}
+            >
+              View Snippets
+            </button>
+          )}
+          {view !== "createSnippets" && (
+            <button
+              className="bg-stone-700 hover:bg-stone-600 active:bg-stone-500 tracking-wide font-bold py-2 px-3 rounded-md cursor-pointer transition-colors duration-200 hover:transition-none active:transition-none"
+              onClick={() => setView("createSnippets")}
+            >
+              Create Snippets
+            </button>
+          )}
+          {view !== "settings" && (
+            <button
+              className="bg-stone-700 hover:bg-stone-600 active:bg-stone-500 tracking-wide font-bold py-2 px-3 rounded-md cursor-pointer transition-colors duration-200 hover:transition-none active:transition-none"
+              onClick={() => setView("settings")}
+            >
+              Settings
+            </button>
+          )}
         </div>
       </div>
       <div className="mt-8"></div>
 
       {/* Order Information Form Section */}
-      <h1 className="mb-2">Order Information</h1>
-      <form className="flex flex-col mb-12">
-        {/* First row of form fields */}
-        <div className="flex gap-2 my-2">
-          <div className="w-54">
-            Tech Name:{" "}
-            <input
-              className="border border-gray-500 px-1.5 py-0.5 rounded"
-              id="TechName"
-              value={techName}
-              onChange={(event) => handleInput(setTechName, event)}
-            />
-          </div>
-          <div className="w-54">
-            User Name:{" "}
-            <input
-              className="border border-gray-500 px-1.5 py-0.5 rounded"
-              id="UserName"
-              value={userName}
-              onChange={(event) => handleInput(setUserName, event)}
-            />
-          </div>
-          <div className="w-54">
-            Item Name:{" "}
-            <input
-              className="border border-gray-500 px-1.5 py-0.5 rounded"
-              id="ItemName"
-              value={itemName}
-              onChange={(event) => handleInput(setItemName, event)}
-            />
-          </div>
-        </div>
+      {view !== "settings" && (
+        <>
+          <h1 className="mb-2">Order Information</h1>
+          <form className="flex flex-col mb-12">
+            {/* First row of form fields */}
+            <div className="flex gap-2 my-2">
+              <div className="w-54">
+                Tech Name:{" "}
+                <input
+                  className="border border-gray-500 px-1.5 py-0.5 rounded"
+                  id="TechName"
+                  value={techName}
+                  onChange={(event) => handleInput(setTechName, event)}
+                />
+              </div>
+              <div className="w-54">
+                User Name:{" "}
+                <input
+                  className="border border-gray-500 px-1.5 py-0.5 rounded"
+                  id="UserName"
+                  value={userName}
+                  onChange={(event) => handleInput(setUserName, event)}
+                />
+              </div>
+              <div className="w-54">
+                Item Name:{" "}
+                <input
+                  className="border border-gray-500 px-1.5 py-0.5 rounded"
+                  id="ItemName"
+                  value={itemName}
+                  onChange={(event) => handleInput(setItemName, event)}
+                />
+              </div>
+            </div>
 
-        {/* Second row of form fields */}
-        <div className="flex gap-2">
-          <div className="w-54">
-            Time Frame:{" "}
-            <input
-              className="border border-gray-500 px-1.5 py-0.5 rounded"
-              id="TimeFrame"
-              value={timeFrame}
-              onChange={(event) => handleInput(setTimeFrame, event)}
-            />
-          </div>
-          <div className="w-54">
-            Delivery Location:{" "}
-            <input
-              className="border border-gray-500 px-1.5 py-0.5 rounded"
-              id="DeliveryLocation"
-              value={deliveryLocation}
-              onChange={(event) => handleInput(setDeliveryLocation, event)}
-            />
-          </div>
-          <div className="w-54">
-            Tracking Number:{" "}
-            <input
-              className="border border-gray-500 px-1.5 py-0.5 rounded"
-              id="trackingNumber"
-              value={trackingNumber}
-              onChange={(event) => handleInput(setTrackingNumber, event)}
-            />
-          </div>
+            {/* Second row of form fields */}
+            <div className="flex gap-2">
+              <div className="w-54">
+                Time Frame:{" "}
+                <input
+                  className="border border-gray-500 px-1.5 py-0.5 rounded"
+                  id="TimeFrame"
+                  value={timeFrame}
+                  onChange={(event) => handleInput(setTimeFrame, event)}
+                />
+              </div>
+              <div className="w-54">
+                Delivery Location:{" "}
+                <input
+                  className="border border-gray-500 px-1.5 py-0.5 rounded"
+                  id="DeliveryLocation"
+                  value={deliveryLocation}
+                  onChange={(event) => handleInput(setDeliveryLocation, event)}
+                />
+              </div>
+              <div className="w-54">
+                Tracking Number:{" "}
+                <input
+                  className="border border-gray-500 px-1.5 py-0.5 rounded"
+                  id="trackingNumber"
+                  value={trackingNumber}
+                  onChange={(event) => handleInput(setTrackingNumber, event)}
+                />
+              </div>
 
-          {/* Security Key checkbox */}
-          <div className="flex flex-col gap-2 text-center w-54">
-            <div>Security Key?</div>
-            <input
-              type="checkbox"
-              className="scale-125"
-              checked={isSecurityKey}
-              onChange={toggleSecurityKeyMessage}
-            />
-          </div>
-        </div>
-      </form>
+              {/* Security Key checkbox */}
+              <div className="flex flex-col gap-2 text-center w-54">
+                <div>Security Key?</div>
+                <input
+                  type="checkbox"
+                  className="scale-125"
+                  checked={isSecurityKey}
+                  onChange={toggleSecurityKeyMessage}
+                />
+              </div>
+            </div>
+          </form>
+        </>
+      )}
 
       {/* Template Creation View - Only shown when view state is "createSnippets" */}
       {view === "createSnippets" && (
@@ -367,26 +404,20 @@ function App() {
           <h1 className="mb-4 mt-12">Snippet Preview</h1>
           <Snippet
             orderInfoObject={orderInfoObject}
-            snippetInfoObject={snippetInfoObject}
+            snippetInfoObject={addDefaultToSnippet(snippetInfoObject)}
+            setCurrentSnippets={setCurrentSnippets}
           />
         </>
       )}
 
       {/* View Snippets View - Only shown when view state is "viewSnippets" */}
       {view === "viewSnippets" && (
-        <>
-          <h1 className="mb-6">Snippets</h1>
-          {defaultSnippets.map((snippetInfo: TSnippetInfoObject) => (
-            <Snippet
-              orderInfoObject={orderInfoObject}
-              snippetInfoObject={snippetInfo}
-            />
-          ))}
-          {/* Pre-built snippet templates with current order data */}
-          {/* <FirstResponse orderInfoObject={orderInfoObject} />
-          <DeskDelivery orderInfoObject={orderInfoObject} />
-          <OrderShipped orderInfoObject={orderInfoObject} /> */}
-        </>
+        <ViewSnippets
+          key={view}
+          currentSnippets={currentSnippets}
+          orderInfoObject={orderInfoObject}
+          setCurrentSnippets={setCurrentSnippets}
+        />
       )}
     </div>
   );
